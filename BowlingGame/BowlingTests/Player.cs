@@ -5,7 +5,8 @@ namespace BowlingTests
 {
     public class Player
     {
-        public readonly string name;
+        public readonly string Name;
+        
         private int turn = 0;
         private readonly List<int> rolls = new List<int>();
         private readonly List<Turn> turns = new List<Turn>();
@@ -15,7 +16,7 @@ namespace BowlingTests
 
         public Player(string name)
         {
-            this.name = name;
+            this.Name = name;
             gameOver = false;
             for (var i = 0; i < 10; i++)
             {

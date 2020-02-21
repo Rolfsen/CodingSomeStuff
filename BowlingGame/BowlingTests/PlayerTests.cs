@@ -155,7 +155,7 @@ namespace BowlingTests
         [Fact]
         public void PlayerShouldHaveAName()
         {
-            Assert.Equal("Player", player.name);
+            Assert.Equal("Player", player.Name);
         }
     }
 }
