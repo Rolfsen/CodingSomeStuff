@@ -20,36 +20,38 @@ namespace BowlingTests
         
         public int GetScore()
         {
-            
             GetRolls();
             var nextRoll = 0;
             for (var index = 0; index < turns.Count; index++)
             {
                 var currentTurnRolls = turns[index].Rolls;
-                for (var turnRoll = 0; turnRoll < currentTurnRolls.Count; turnRoll++)
-                {
-                    nextRoll++;
-                    playerScore += currentTurnRolls[turnRoll];
-                }
-
-                if (currentTurnRolls.Sum() == 10 && index+1 != turns.Count)
-                {
-                    if (currentTurnRolls.Count == 1)
-                        playerScore += rolls[nextRoll + 1];
-                    playerScore += rolls[nextRoll];
-                }
+                nextRoll = CalculateScoreForTurn(currentTurnRolls, nextRoll);
+                CalculateEkstrePoints(currentTurnRolls, index, nextRoll);
             }
 
             return playerScore;
         }
 
-        private void GetRolls()
+        private int CalculateScoreForTurn(List<int> currentTurnRolls, int nextRoll)
         {
-            foreach (var roll in turns.SelectMany(turn => turn.Rolls))
+            foreach (var roll in currentTurnRolls)
             {
-                rolls.Add(roll);
+                nextRoll++;
+                playerScore += roll;
             }
+
+            return nextRoll;
         }
+
+        private void CalculateEkstrePoints(List<int> currentTurnRolls, int index, int nextRoll)
+        {
+            if (currentTurnRolls.Sum() != 10 || index + 1 == turns.Count) return;
+            if (currentTurnRolls.Count == 1)
+                playerScore += rolls[nextRoll + 1];
+            playerScore += rolls[nextRoll];
+        }
+
+
         public void Roll(int roll)
         {
             var currentTurn= turns[turn];
@@ -61,6 +63,14 @@ namespace BowlingTests
             {
                 turn++;
                 Roll(roll);
+            }
+        }
+        
+        private void GetRolls()
+        {
+            foreach (var roll in turns.SelectMany(turn => turn.Rolls))
+            {
+                rolls.Add(roll);
             }
         }
     }

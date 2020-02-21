@@ -10,9 +10,7 @@ namespace BowlingTests
         {
             this.player = new Player();
         }
-
-    
-
+        
         [Fact]
         public void Rolling0ShouldReturn0()
         {
