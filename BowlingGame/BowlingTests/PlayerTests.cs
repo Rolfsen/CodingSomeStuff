@@ -139,5 +139,18 @@ namespace BowlingTests
             Assert.True(player.gameOver);
         }
 
+        [Fact]
+        public void RollingAfterTheGameIsOverShouldNotIncrementScore()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                player.Roll(1);
+            }
+
+            var a = player.GetScore();
+            player.Roll(5);
+            Assert.Equal(a,player.GetScore());
+        }
+
     }
 }

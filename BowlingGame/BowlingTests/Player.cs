@@ -23,6 +23,7 @@ namespace BowlingTests
         
         public int GetScore()
         {
+            playerScore = 0;
             GetRolls();
             var nextRoll = 0;
             for (var index = 0; index < turns.Count; index++)
