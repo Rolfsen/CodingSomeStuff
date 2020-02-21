@@ -5,84 +5,62 @@ namespace BowlingTests
 {
     public class GameTests
     {
-        private Player player;
-        
+        private readonly BowlingGame bowlingGame;
+
         public GameTests()
         {
-            this.player = new Player();
-        }
-
-        [Fact]
-        public void Rolling0ShouldReturn0()
-        {
-            player.Roll(0);
-            Assert.Equal(0, player.GetScore());
-        }
-
-        [Fact]
-        public void Rolling1ShouldReturn1()
-        {
-            player.Roll(1);
-            Assert.Equal(1,player.GetScore());
-        }
-
-        [Fact]
-        public void Rolling1And3ShouldSetScoreTo4()
-        {
-            player.Roll(1);
-            player.Roll(3);
-            Assert.Equal(4,player.GetScore());
-        }
-
-        [Fact]
-        public void PlayerShouldHave14PointsAfterRolling2AfterSpare()
-        {
-            player.Roll(1);
-            player.Roll(9);
-            player.Roll(2);
-            Assert.Equal(14, player.GetScore());
+            bowlingGame = new BowlingGame();
         }
         
         [Fact]
-        public void PlayerShouldHave12PointsAfterRolling1AfterSpare()
+        public void GameShouldNotBeStarted()
         {
-            player.Roll(1);
-            player.Roll(9);
-            player.Roll(1);
-            Assert.Equal(12, player.GetScore());
+            Assert.False(bowlingGame.IsStarted);
+        }
+
+
+        [Fact]
+        public void StartingDontStartWithoutPlayers()
+        {
+            bowlingGame.StartGame();
+            Assert.False(bowlingGame.IsStarted);
+        }
+        
+        [Fact]
+        public void StartingGameWithOnePlayerShouldStartGame()
+        {
+            bowlingGame.AddPlayer("");
+            bowlingGame.StartGame();
+            Assert.True(bowlingGame.IsStarted);
+        }
+        
+        [Fact]
+        public void AddingAPlayerAfterGameIsStartedShouldFail()
+        {
+            bowlingGame.AddPlayer("A");
+            bowlingGame.StartGame();
+            bowlingGame.AddPlayer("B");
+            Assert.Equal(1, bowlingGame.GetPlayers().Count);
         }
     }
 
-    public class Player
+    public class BowlingGame
     {
-        private readonly List<int> rolls = new List<int>();
-        private readonly List<Turn> turns = new List<Turn>();
-        private int playerScore;
+        public bool IsStarted;
+        private readonly List<Player> players = new List<Player>();
 
-        public int GetScore()
+        public List<Player> GetPlayers() => players;
+
+        public void StartGame()
         {
-            var previousRoll = 0;
-            for (var index = 0; index < rolls.Count; index++)
-            { 
-                var roll = rolls[index];
-                if (roll + previousRoll == 10)
-                { 
-                    playerScore += rolls[index + 1]; 
-                } 
-                playerScore += roll; 
-                previousRoll = roll;
-            }
-
-            return playerScore;
+            if (players.Count > 0)
+                IsStarted = true;
         }
-        public void Roll(int roll)
+
+        public void AddPlayer(string name)
         {
-            rolls.Add(roll);
+            if(!IsStarted)
+                players.Add(new Player(name));
         }
-    }
-
-    public class Turn
-    {
-        public List<int> Rolls = new List<int>();
     }
 }
