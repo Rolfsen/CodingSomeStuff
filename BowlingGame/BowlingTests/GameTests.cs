@@ -5,46 +5,46 @@ namespace BowlingTests
 {
     public class GameTests
     {
-        private readonly BowlingGame bowlingGame;
+        private readonly BowlingGameSetup bowlingGameSetup;
 
         public GameTests()
         {
-            bowlingGame = new BowlingGame();
+            bowlingGameSetup = new BowlingGameSetup();
         }
         
         [Fact]
         public void GameShouldNotBeStarted()
         {
-            Assert.False(bowlingGame.IsStarted);
+            Assert.False(bowlingGameSetup.IsStarted);
         }
 
 
         [Fact]
         public void StartingDontStartWithoutPlayers()
         {
-            bowlingGame.StartGame();
-            Assert.False(bowlingGame.IsStarted);
+            bowlingGameSetup.StartGame();
+            Assert.False(bowlingGameSetup.IsStarted);
         }
         
         [Fact]
         public void StartingGameWithOnePlayerShouldStartGame()
         {
-            bowlingGame.AddPlayer("");
-            bowlingGame.StartGame();
-            Assert.True(bowlingGame.IsStarted);
+            bowlingGameSetup.AddPlayer("");
+            bowlingGameSetup.StartGame();
+            Assert.True(bowlingGameSetup.IsStarted);
         }
         
         [Fact]
         public void AddingAPlayerAfterGameIsStartedShouldFail()
         {
-            bowlingGame.AddPlayer("A");
-            bowlingGame.StartGame();
-            bowlingGame.AddPlayer("B");
-            Assert.Equal(1, bowlingGame.GetPlayers().Count);
+            bowlingGameSetup.AddPlayer("A");
+            bowlingGameSetup.StartGame();
+            bowlingGameSetup.AddPlayer("B");
+            Assert.Equal(1, bowlingGameSetup.GetPlayers().Count);
         }
     }
 
-    public class BowlingGame
+    public class BowlingGameSetup
     {
         public bool IsStarted;
         private readonly List<Player> players = new List<Player>();
