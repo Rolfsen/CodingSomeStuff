@@ -72,6 +72,26 @@ namespace BowlingTests
             
             Assert.Equal(300, player.GetScore());
         }
+
+        [Fact]
+        public void FluckGame()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                player.Roll(0);
+            }
+            Assert.Equal(0,player.GetScore());
+        }
+        
+        [Fact]
+        public void OneGame()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                player.Roll(1);
+            }
+            Assert.Equal(20,player.GetScore());
+        }
     }
 
     public class Player
@@ -88,6 +108,7 @@ namespace BowlingTests
                 turns.Add(new Turn());
             }
         }
+        
         public int GetScore()
         {
             
