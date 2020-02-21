@@ -2,11 +2,11 @@
 
 namespace BowlingTests
 {
-    public class GameTests
+    public class PlayerTests
     {
         private Player player;
         
-        public GameTests()
+        public PlayerTests()
         {
             this.player = new Player();
         }
@@ -79,6 +79,16 @@ namespace BowlingTests
             Assert.Equal(0,player.GetScore());
         }
         
+        [Fact] public void GameShouldEndAfter10TurnsInCaseOfNoStrikeAndSparesInTurn10()
+        {
+            for (int i = 0; i < 20; i++)
+            {
+                player.Roll(0);
+            }
+            
+            Assert.True(player.gameOver);
+        }
+
         [Fact]
         public void OneGame()
         {
@@ -88,5 +98,46 @@ namespace BowlingTests
             }
             Assert.Equal(20,player.GetScore());
         }
+        
+        [Fact] public void GameShouldNotEndAfter9TurnsAnd1Throw()
+        {
+            for (int i = 0; i < 19; i++)
+            {
+                player.Roll(0);
+            }
+            
+            Assert.False(player.gameOver);
+        }
+        
+        [Fact] public void GameShouldNotEndAfter1Turn()
+        {
+            player.Roll(1);           
+            player.Roll(1);
+            Assert.False(player.gameOver);
+        }
+
+        [Fact]
+        public void GameShouldNotEndAfterTwoThrowsInTurn9InCaseOfStrike()
+        {
+            for (int i = 0; i < 19; i++)
+            {
+                player.Roll(0);
+            }
+            player.Roll(10);
+            Assert.False(player.gameOver);
+        }
+        
+        [Fact]
+        public void GameShouldEndAfterThreeThrowsInTurn9InCaseOfStrike()
+        {
+            for (int i = 0; i < 19; i++)
+            {
+                player.Roll(0);
+            }
+            player.Roll(10);
+            player.Roll(10);
+            Assert.True(player.gameOver);
+        }
+
     }
 }

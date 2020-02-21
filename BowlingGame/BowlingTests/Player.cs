@@ -10,8 +10,11 @@ namespace BowlingTests
         private readonly List<Turn> turns = new List<Turn>();
         private int playerScore;
 
+        public bool gameOver { get; private set; }
+
         public Player()
         {
+            gameOver = false;
             for (var i = 0; i < 10; i++)
             {
                 turns.Add(new Turn());
@@ -54,18 +57,36 @@ namespace BowlingTests
 
         public void Roll(int roll)
         {
+            if (gameOver) return;
+            
             var currentTurn= turns[turn];
             if (currentTurn.Rolls.Sum() < 10 && currentTurn.Rolls.Count <= 1)
                 currentTurn.Rolls.Add(roll);
             else if (turn == 9)
+            {
                 currentTurn.Rolls.Add(roll);
+            }
             else
             {
                 turn++;
                 Roll(roll);
             }
+            CheckIfGameIsOver();
         }
-        
+
+        private void CheckIfGameIsOver()
+        {
+            if (turn != 9) return;
+
+            switch (turns[9].Rolls.Count)
+            {
+                case 2 when turns[9].Rolls.Sum() < 10:
+                case 3:
+                    gameOver = true;
+                    break;
+            }
+        }
+
         private void GetRolls()
         {
             foreach (var roll in turns.SelectMany(turn => turn.Rolls))
