@@ -5,6 +5,7 @@ namespace BowlingTests
 {
     public class Player
     {
+        public readonly string name;
         private int turn = 0;
         private readonly List<int> rolls = new List<int>();
         private readonly List<Turn> turns = new List<Turn>();
@@ -12,8 +13,9 @@ namespace BowlingTests
 
         public bool gameOver { get; private set; }
 
-        public Player()
+        public Player(string name)
         {
+            this.name = name;
             gameOver = false;
             for (var i = 0; i < 10; i++)
             {
@@ -30,7 +32,7 @@ namespace BowlingTests
             {
                 var currentTurnRolls = turns[index].Rolls;
                 nextRoll = CalculateScoreForTurn(currentTurnRolls, nextRoll);
-                CalculateEkstrePoints(currentTurnRolls, index, nextRoll);
+                CalculateBonusPoints(currentTurnRolls, index, nextRoll);
             }
 
             return playerScore;
@@ -47,7 +49,7 @@ namespace BowlingTests
             return nextRoll;
         }
 
-        private void CalculateEkstrePoints(List<int> currentTurnRolls, int index, int nextRoll)
+        private void CalculateBonusPoints(List<int> currentTurnRolls, int index, int nextRoll)
         {
             if (currentTurnRolls.Sum() != 10 || index + 1 == turns.Count) return;
             if (currentTurnRolls.Count == 1)

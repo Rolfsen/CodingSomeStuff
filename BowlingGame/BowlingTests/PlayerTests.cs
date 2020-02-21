@@ -8,7 +8,7 @@ namespace BowlingTests
         
         public PlayerTests()
         {
-            this.player = new Player();
+            this.player = new Player("Player");
         }
         
         [Fact]
@@ -152,5 +152,10 @@ namespace BowlingTests
             Assert.Equal(a,player.GetScore());
         }
 
+        [Fact]
+        public void PlayerShouldHaveAName()
+        {
+            Assert.Equal("Player", player.name);
+        }
     }
 }
