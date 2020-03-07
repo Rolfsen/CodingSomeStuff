@@ -24,13 +24,27 @@ namespace BowlingTests
         
         public int Roll(int roll)
         {
-            if (GameOver) return Turn;
+            if (IsRollInvalid(roll)) return Turn;
+            
             var currentTurn= turns[Turn];
             currentTurn.Rolls.Add(roll);
             IncrementTurn(currentTurn);
             CheckIfGameIsOver();
             return Turn;
         }
+
+        private bool IsRollInvalid(int roll)
+        {
+            if (GameOver) return true;
+            if (roll < 0) return true;
+            if (roll > 10) return true;
+            if (roll + turns[Turn].Rolls.Sum() > 10 && Turn != 9)
+                return true;
+            if (Turn != 9) return false;
+            var a = LastRoundValidator.ValidateLastRoundRolls(roll, turns[9]);
+            return a == false;
+        }
+
 
         private void IncrementTurn(Turn currentTurn)
         {
