@@ -66,5 +66,28 @@ namespace BowlingTests
             manager.Roll(5);
             Assert.Equal(manager.Players[0],manager.CurrentPlayer);
         }
+        
+        
+        [Fact]
+        public void WhenAllPlayersHavePlayed1TurnsGameShouldNotBeOver()
+        {
+            var manager = CreatePlayerTurnManager();
+            manager.Roll(3);
+            manager.Roll(5);
+            manager.Roll(3);
+            manager.Roll(5);
+            Assert.False(manager.GameOver);
+        }
+
+        [Fact]
+        public void WhenAllPlayersHavePlayed10TurnsGameShouldBeOver()
+        {
+            var manager = CreatePlayerTurnManager();
+            for (int i = 0; i < 40; i++)
+            {
+                manager.Roll(1);
+            }
+            Assert.True(manager.GameOver);
+        }
     }
 }

@@ -9,11 +9,13 @@ namespace BowlingTests
         
         public List<Player> Players { get; }
         public Player CurrentPlayer { get; private set; }
-        
+        public bool GameOver { get; private set; }
+
         public PlayerTurnManager(List<Player> players)
         {
             Players = players;
             CurrentPlayer = players[0];
+            GameOver = false;
         }
 
         public void Roll(int roll)
@@ -23,6 +25,7 @@ namespace BowlingTests
             if (turn == playerTurn) return;
             var currentIndex = Players.FindIndex(player => ReferenceEquals(player, CurrentPlayer));
             CurrentPlayer = currentIndex + 1 == Players.Count ? Players.First() : Players[currentTurn + 1];
+            GameOver = Players.All(player => player.GameOver);
         }
     }
 }
