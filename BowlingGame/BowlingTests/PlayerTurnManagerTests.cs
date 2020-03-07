@@ -83,7 +83,7 @@ namespace BowlingTests
         public void WhenAllPlayersHavePlayed10TurnsGameShouldBeOver()
         {
             var manager = CreatePlayerTurnManager();
-            for (int i = 0; i < 40; i++)
+            for (var i = 0; i < 40; i++)
             {
                 manager.Roll(1);
             }
