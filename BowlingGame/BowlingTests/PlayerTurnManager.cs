@@ -7,7 +7,7 @@ namespace BowlingTests
     {
         private int currentTurn = 0; 
         
-        public List<Player> Players;
+        public List<Player> Players { get; }
         public Player CurrentPlayer { get; private set; }
         
         public PlayerTurnManager(List<Player> players)
