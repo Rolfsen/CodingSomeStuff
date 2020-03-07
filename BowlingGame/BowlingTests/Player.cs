@@ -7,9 +7,9 @@ namespace BowlingTests
     {
         public readonly string Name;
 
-        public int Turn { get; private set; }
         public readonly List<Turn> turns = new List<Turn>();
 
+        public int Turn { get; private set; }
         public bool GameOver { get; private set; }
 
         public Player(string name)
