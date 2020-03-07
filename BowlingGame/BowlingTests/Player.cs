@@ -7,17 +7,17 @@ namespace BowlingTests
     {
         public readonly string Name;
 
-        public int turn = 0;
+        public int Turn { get; private set; } = 0;
         private readonly List<int> rolls = new List<int>();
         private readonly List<Turn> turns = new List<Turn>();
         private int playerScore;
 
-        public bool gameOver { get; private set; }
+        public bool GameOver { get; private set; }
 
         public Player(string name)
         {
             Name = name;
-            gameOver = false;
+            GameOver = false;
             for (var i = 0; i < 10; i++)
             {
                 turns.Add(new Turn());
@@ -26,22 +26,22 @@ namespace BowlingTests
         
         public int Roll(int roll)
         {
-            if (gameOver) return turn;
-            var currentTurn= turns[turn];
+            if (GameOver) return Turn;
+            var currentTurn= turns[Turn];
             currentTurn.Rolls.Add(roll);
             IncrementTurn(currentTurn);
             CheckIfGameIsOver();
-            return turn;
+            return Turn;
         }
 
         private void IncrementTurn(Turn currentTurn)
         {
-            if ((currentTurn.Rolls.Sum() == 10 || currentTurn.Rolls.Count == 2) && turn != 9)
-                turn++;
-            else if (turn == 9 && currentTurn.Rolls.Count == 2 && currentTurn.Rolls.Sum() < 10)
-                turn++;
+            if ((currentTurn.Rolls.Sum() == 10 || currentTurn.Rolls.Count == 2) && Turn != 9)
+                Turn++;
+            else if (Turn == 9 && currentTurn.Rolls.Count == 2 && currentTurn.Rolls.Sum() < 10)
+                Turn++;
             else if (currentTurn.Rolls.Count == 3)
-                turn++;
+                Turn++;
         }
 
         public int GetScore()
@@ -89,13 +89,13 @@ namespace BowlingTests
 
         private void CheckIfGameIsOver()
         {
-            if (turn != 10) return;
+            if (Turn != 10) return;
 
             switch (turns[9].Rolls.Count)
             {
                 case 2 when turns[9].Rolls.Sum() < 10:
                 case 3:
-                    gameOver = true;
+                    GameOver = true;
                     break;
             }
         }

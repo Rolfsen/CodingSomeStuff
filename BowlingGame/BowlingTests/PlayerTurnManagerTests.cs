@@ -84,7 +84,7 @@ namespace BowlingTests
 
         public void Roll(int roll)
         {
-            var playerTurn = CurrentPlayer.turn;
+            var playerTurn = CurrentPlayer.Turn;
             var turn = CurrentPlayer.Roll(roll);
             if (turn == playerTurn) return;
             var currentIndex = Players.FindIndex(player => ReferenceEquals(player, CurrentPlayer));

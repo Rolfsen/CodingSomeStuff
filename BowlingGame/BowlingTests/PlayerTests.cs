@@ -86,7 +86,7 @@ namespace BowlingTests
                 player.Roll(0);
             }
             
-            Assert.True(player.gameOver);
+            Assert.True(player.GameOver);
         }
 
         [Fact]
@@ -106,14 +106,14 @@ namespace BowlingTests
                 player.Roll(0);
             }
             
-            Assert.False(player.gameOver);
+            Assert.False(player.GameOver);
         }
         
         [Fact] public void GameShouldNotEndAfter1Turn()
         {
             player.Roll(1);           
             player.Roll(1);
-            Assert.False(player.gameOver);
+            Assert.False(player.GameOver);
         }
 
         [Fact]
@@ -124,7 +124,7 @@ namespace BowlingTests
                 player.Roll(0);
             }
             player.Roll(10);
-            Assert.False(player.gameOver);
+            Assert.False(player.GameOver);
         }
         
         [Fact]
@@ -136,7 +136,7 @@ namespace BowlingTests
             }
             player.Roll(10);
             player.Roll(10);
-            Assert.True(player.gameOver);
+            Assert.True(player.GameOver);
         }
 
         [Fact]
