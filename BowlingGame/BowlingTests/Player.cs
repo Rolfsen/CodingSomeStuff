@@ -16,7 +16,7 @@ namespace BowlingTests
 
         public Player(string name)
         {
-            this.Name = name;
+            Name = name;
             gameOver = false;
             for (var i = 0; i < 10; i++)
             {
@@ -24,6 +24,26 @@ namespace BowlingTests
             }
         }
         
+        public int Roll(int roll)
+        {
+            if (gameOver) return turn;
+            var currentTurn= turns[turn];
+            currentTurn.Rolls.Add(roll);
+            IncrementTurn(currentTurn);
+            CheckIfGameIsOver();
+            return turn;
+        }
+
+        private void IncrementTurn(Turn currentTurn)
+        {
+            if ((currentTurn.Rolls.Sum() == 10 || currentTurn.Rolls.Count == 2) && turn != 9)
+                turn++;
+            else if (turn == 9 && currentTurn.Rolls.Count == 2 && currentTurn.Rolls.Sum() < 10)
+                turn++;
+            else if (currentTurn.Rolls.Count == 3)
+                turn++;
+        }
+
         public int GetScore()
         {
             playerScore = 0;
@@ -31,12 +51,18 @@ namespace BowlingTests
             var nextRoll = 0;
             for (var index = 0; index < turns.Count; index++)
             {
-                var currentTurnRolls = turns[index].Rolls;
-                nextRoll = CalculateScoreForTurn(currentTurnRolls, nextRoll);
-                CalculateBonusPoints(currentTurnRolls, index, nextRoll);
+                nextRoll = NextRoll(index, nextRoll);
             }
 
             return playerScore;
+        }
+
+        private int NextRoll(int index, int nextRoll)
+        {
+            var currentTurnRolls = turns[index].Rolls;
+            nextRoll = CalculateScoreForTurn(currentTurnRolls, nextRoll);
+            CalculateBonusPoints(currentTurnRolls, index, nextRoll);
+            return nextRoll;
         }
 
         private int CalculateScoreForTurn(List<int> currentTurnRolls, int nextRoll)
@@ -59,32 +85,7 @@ namespace BowlingTests
         }
 
 
-        public int Roll(int roll)
-        {
-            if (gameOver) return turn;
-            
-            var currentTurn= turns[turn];
-            if (currentTurn.Rolls.Sum() < 10 && currentTurn.Rolls.Count <= 1)
-                currentTurn.Rolls.Add(roll);
-            else if (turn == 9)
-            {
-                currentTurn.Rolls.Add(roll);
-            }
-            
-            if ((currentTurn.Rolls.Sum() == 10 || currentTurn.Rolls.Count == 2) && turn != 9)
-            {
-                turn++;
-            }
-            else if (turn == 9 && currentTurn.Rolls.Count == 2 && currentTurn.Rolls.Sum() < 10)
-            {
-                turn++;
-            }
-            else if (currentTurn.Rolls.Count == 3)
-                turn++;
-
-            CheckIfGameIsOver();
-            return turn;
-        }
+        
 
         private void CheckIfGameIsOver()
         {
