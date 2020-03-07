@@ -51,9 +51,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BowlingGameSetup.cs" />
+    <Compile Include="BowlingScoreCalculator.cs" />
+    <Compile Include="CalculateScore.cs" />
+    <Compile Include="CreatePlayerDto.cs" />
     <Compile Include="GameTests.cs" />
+    <Compile Include="PlayerFactory.cs" />
+    <Compile Include="PlayerFactoryTest.cs" />
+    <Compile Include="PlayersFactory.cs" />
+    <Compile Include="PlayersFactoryTests.cs" />
     <Compile Include="PlayerTests.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="PlayerTurnManager.cs" />
+    <Compile Include="PlayerTurnManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Turn.cs" />
   </ItemGroup>

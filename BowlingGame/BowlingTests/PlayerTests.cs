@@ -5,9 +5,11 @@ namespace BowlingTests
     public class PlayerTests
     {
         private Player player;
+        private CalculateScore BowlingScoreCalculator;
         
         public PlayerTests()
         {
+            this.BowlingScoreCalculator = new BowlingScoreCalculator();
             this.player = new Player("Player");
         }
         
@@ -15,14 +17,14 @@ namespace BowlingTests
         public void Rolling0ShouldReturn0()
         {
             player.Roll(0);
-            Assert.Equal(0, player.GetScore());
+            Assert.Equal(0, BowlingScoreCalculator.GetScore(player.turns));
         }
 
         [Fact]
         public void Rolling1ShouldReturn1()
         {
             player.Roll(1);
-            Assert.Equal(1,player.GetScore());
+            Assert.Equal(1,BowlingScoreCalculator.GetScore(player.turns));
         }
 
         [Fact]
@@ -30,7 +32,7 @@ namespace BowlingTests
         {
             player.Roll(1);
             player.Roll(3);
-            Assert.Equal(4,player.GetScore());
+            Assert.Equal(4,BowlingScoreCalculator.GetScore(player.turns));
         }
 
         [Fact]
@@ -39,7 +41,7 @@ namespace BowlingTests
             player.Roll(1);
             player.Roll(9);
             player.Roll(2);
-            Assert.Equal(14, player.GetScore());
+            Assert.Equal(14, BowlingScoreCalculator.GetScore(player.turns));
         }
         
         [Fact]
@@ -48,7 +50,7 @@ namespace BowlingTests
             player.Roll(1);
             player.Roll(9);
             player.Roll(1);
-            Assert.Equal(12, player.GetScore());
+            Assert.Equal(12, BowlingScoreCalculator.GetScore(player.turns));
         }
 
         [Fact]
@@ -57,7 +59,7 @@ namespace BowlingTests
             player.Roll(10);
             player.Roll(2);
             player.Roll(2);
-            Assert.Equal(18,player.GetScore());
+            Assert.Equal(18,BowlingScoreCalculator.GetScore(player.turns));
         }
         [Fact] public void PerfectGame()
         {
@@ -66,7 +68,7 @@ namespace BowlingTests
                 player.Roll(10);
             }
             
-            Assert.Equal(300, player.GetScore());
+            Assert.Equal(300, BowlingScoreCalculator.GetScore(player.turns));
         }
 
         [Fact]
@@ -76,7 +78,7 @@ namespace BowlingTests
             {
                 player.Roll(0);
             }
-            Assert.Equal(0,player.GetScore());
+            Assert.Equal(0,BowlingScoreCalculator.GetScore(player.turns));
         }
         
         [Fact] public void GameShouldEndAfter10TurnsInCaseOfNoStrikeAndSparesInTurn10()
@@ -86,7 +88,7 @@ namespace BowlingTests
                 player.Roll(0);
             }
             
-            Assert.True(player.gameOver);
+            Assert.True(player.GameOver);
         }
 
         [Fact]
@@ -96,7 +98,7 @@ namespace BowlingTests
             {
                 player.Roll(1);
             }
-            Assert.Equal(20,player.GetScore());
+            Assert.Equal(20,BowlingScoreCalculator.GetScore(player.turns));
         }
         
         [Fact] public void GameShouldNotEndAfter9TurnsAnd1Throw()
@@ -106,14 +108,14 @@ namespace BowlingTests
                 player.Roll(0);
             }
             
-            Assert.False(player.gameOver);
+            Assert.False(player.GameOver);
         }
         
         [Fact] public void GameShouldNotEndAfter1Turn()
         {
             player.Roll(1);           
             player.Roll(1);
-            Assert.False(player.gameOver);
+            Assert.False(player.GameOver);
         }
 
         [Fact]
@@ -124,7 +126,7 @@ namespace BowlingTests
                 player.Roll(0);
             }
             player.Roll(10);
-            Assert.False(player.gameOver);
+            Assert.False(player.GameOver);
         }
         
         [Fact]
@@ -136,26 +138,27 @@ namespace BowlingTests
             }
             player.Roll(10);
             player.Roll(10);
-            Assert.True(player.gameOver);
+            Assert.True(player.GameOver);
         }
 
         [Fact]
         public void RollingAfterTheGameIsOverShouldNotIncrementScore()
         {
+            
             for (int i = 0; i < 20; i++)
             {
                 player.Roll(1);
             }
 
-            var a = player.GetScore();
+            var a = BowlingScoreCalculator.GetScore(player.turns);
             player.Roll(5);
-            Assert.Equal(a,player.GetScore());
+            Assert.Equal(a,BowlingScoreCalculator.GetScore(player.turns));
         }
 
         [Fact]
         public void PlayerShouldHaveAName()
         {
-            Assert.Equal("Player", player.name);
+            Assert.Equal("Player", player.Name);
         }
     }
 }

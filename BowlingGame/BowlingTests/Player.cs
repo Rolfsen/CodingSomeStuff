@@ -5,96 +5,53 @@ namespace BowlingTests
 {
     public class Player
     {
-        public readonly string name;
-        private int turn = 0;
-        private readonly List<int> rolls = new List<int>();
-        private readonly List<Turn> turns = new List<Turn>();
-        private int playerScore;
+        public readonly string Name;
 
-        public bool gameOver { get; private set; }
+        public readonly List<Turn> turns = new List<Turn>();
+
+        public int Turn { get; private set; }
+        public bool GameOver { get; private set; }
 
         public Player(string name)
         {
-            this.name = name;
-            gameOver = false;
+            Name = name;
+            GameOver = false;
             for (var i = 0; i < 10; i++)
             {
                 turns.Add(new Turn());
             }
         }
         
-        public int GetScore()
+        public int Roll(int roll)
         {
-            playerScore = 0;
-            GetRolls();
-            var nextRoll = 0;
-            for (var index = 0; index < turns.Count; index++)
-            {
-                var currentTurnRolls = turns[index].Rolls;
-                nextRoll = CalculateScoreForTurn(currentTurnRolls, nextRoll);
-                CalculateBonusPoints(currentTurnRolls, index, nextRoll);
-            }
-
-            return playerScore;
-        }
-
-        private int CalculateScoreForTurn(List<int> currentTurnRolls, int nextRoll)
-        {
-            foreach (var roll in currentTurnRolls)
-            {
-                nextRoll++;
-                playerScore += roll;
-            }
-
-            return nextRoll;
-        }
-
-        private void CalculateBonusPoints(List<int> currentTurnRolls, int index, int nextRoll)
-        {
-            if (currentTurnRolls.Sum() != 10 || index + 1 == turns.Count) return;
-            if (currentTurnRolls.Count == 1)
-                playerScore += rolls[nextRoll + 1];
-            playerScore += rolls[nextRoll];
-        }
-
-
-        public void Roll(int roll)
-        {
-            if (gameOver) return;
-            
-            var currentTurn= turns[turn];
-            if (currentTurn.Rolls.Sum() < 10 && currentTurn.Rolls.Count <= 1)
-                currentTurn.Rolls.Add(roll);
-            else if (turn == 9)
-            {
-                currentTurn.Rolls.Add(roll);
-            }
-            else
-            {
-                turn++;
-                Roll(roll);
-            }
+            if (GameOver) return Turn;
+            var currentTurn= turns[Turn];
+            currentTurn.Rolls.Add(roll);
+            IncrementTurn(currentTurn);
             CheckIfGameIsOver();
+            return Turn;
         }
 
+        private void IncrementTurn(Turn currentTurn)
+        {
+            if ((currentTurn.Rolls.Sum() == 10 || currentTurn.Rolls.Count == 2) && Turn != 9)
+                Turn++;
+            else if (Turn == 9 && currentTurn.Rolls.Count == 2 && currentTurn.Rolls.Sum() < 10)
+                Turn++;
+            else if (currentTurn.Rolls.Count == 3)
+                Turn++;
+        }
+        
         private void CheckIfGameIsOver()
         {
-            if (turn != 9) return;
+            if (Turn != 10) return;
 
             switch (turns[9].Rolls.Count)
             {
                 case 2 when turns[9].Rolls.Sum() < 10:
                 case 3:
-                    gameOver = true;
+                    GameOver = true;
                     break;
-            }
-        }
-
-        private void GetRolls()
-        {
-            foreach (var roll in turns.SelectMany(turn => turn.Rolls))
-            {
-                rolls.Add(roll);
             }
         }
     }
