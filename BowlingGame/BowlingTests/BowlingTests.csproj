@@ -56,6 +56,7 @@
     <Compile Include="CalculateScore.cs" />
     <Compile Include="CreatePlayerDto.cs" />
     <Compile Include="GameTests.cs" />
+    <Compile Include="GivenLastRoundWithOnePlayer.cs" />
     <Compile Include="LastRoundValidator.cs" />
     <Compile Include="PlayerFactory.cs" />
     <Compile Include="PlayerFactoryTest.cs" />
