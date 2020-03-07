@@ -51,6 +51,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BowlingScoreCalculator.cs" />
+    <Compile Include="CalculateScore.cs" />
     <Compile Include="CreatePlayerDto.cs" />
     <Compile Include="GameTests.cs" />
     <Compile Include="PlayerFactory.cs" />
