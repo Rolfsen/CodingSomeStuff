@@ -20,5 +20,11 @@ namespace BowlingTests
             if(!IsStarted)
                 players.Add(new Player(name));
         }
+
+        public void AddPlayer(Player player)
+        {
+            if (!IsStarted)
+                players.Add(player);
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BowlingTests
 {
-    class BowlingScoreCalculator : CalculateScore
+    public class BowlingScoreCalculator : CalculateScore
     {
         private int playerScore = 0;
         private readonly List<int> rolls = new List<int>();

@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BowlingTests", "BowlingTests\BowlingTests.csproj", "{5843B39C-32E8-452A-87AF-5004FCC5EE68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleBowling", "ConsoleBowling\ConsoleBowling.csproj", "{5DD941DD-5983-4BD2-BC4F-61F68A67D7A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{5843B39C-32E8-452A-87AF-5004FCC5EE68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5843B39C-32E8-452A-87AF-5004FCC5EE68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5843B39C-32E8-452A-87AF-5004FCC5EE68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DD941DD-5983-4BD2-BC4F-61F68A67D7A3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DD941DD-5983-4BD2-BC4F-61F68A67D7A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DD941DD-5983-4BD2-BC4F-61F68A67D7A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DD941DD-5983-4BD2-BC4F-61F68A67D7A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
