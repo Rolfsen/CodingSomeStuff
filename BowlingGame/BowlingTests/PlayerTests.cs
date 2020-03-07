@@ -160,5 +160,22 @@ namespace BowlingTests
         {
             Assert.Equal("Player", player.Name);
         }
+        
+        [Fact]
+        public void RollingOver10ShouldBeInvalid()
+        {
+            player.Roll(11);
+            var a = BowlingScoreCalculator.GetScore(player.turns);
+            Assert.Equal(0,a);
+        }
+        
+        [Fact]
+        public void RollingOver4And7InOneTurnShouldBeInvalid()
+        {
+            player.Roll(4);
+            player.Roll(7);
+            var a = BowlingScoreCalculator.GetScore(player.turns);
+            Assert.Equal(4,a);
+        }
     }
 }
