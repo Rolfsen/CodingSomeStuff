@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Xunit;
 
 namespace BowlingTests
@@ -51,9 +52,20 @@ namespace BowlingTests
         public void WhenPlayerOnesTurnIsOverItShouldBePlayers2Turn()
         {
             var manager = CreatePlayerTurnManager();
-            manager.CurrentPlayer.Roll(5);
-            manager.CurrentPlayer.Roll(3);
+            manager.Roll(3);
+            manager.Roll(5);
             Assert.Equal(manager.Players[1],manager.CurrentPlayer);
+        }
+        
+        [Fact]
+        public void WhenPlayerTwoTurnIsOverItShouldBePlayers1Turn()
+        {
+            var manager = CreatePlayerTurnManager();
+            manager.Roll(3);
+            manager.Roll(5);
+            manager.Roll(3);
+            manager.Roll(5);
+            Assert.Equal(manager.Players[0],manager.CurrentPlayer);
         }
     }
 
@@ -72,7 +84,11 @@ namespace BowlingTests
 
         public void Roll(int roll)
         {
-           CurrentPlayer.Roll(roll);
+            var playerTurn = CurrentPlayer.turn;
+            var turn = CurrentPlayer.Roll(roll);
+            if (turn == playerTurn) return;
+            var currentIndex = Players.FindIndex(player => ReferenceEquals(player, CurrentPlayer));
+            CurrentPlayer = currentIndex + 1 == Players.Count ? Players.First() : Players[currentTurn + 1];
         }
     }
 }

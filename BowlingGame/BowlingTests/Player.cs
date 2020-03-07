@@ -6,8 +6,8 @@ namespace BowlingTests
     public class Player
     {
         public readonly string Name;
-        
-        private int turn = 0;
+
+        public int turn = 0;
         private readonly List<int> rolls = new List<int>();
         private readonly List<Turn> turns = new List<Turn>();
         private int playerScore;
@@ -59,9 +59,9 @@ namespace BowlingTests
         }
 
 
-        public void Roll(int roll)
+        public int Roll(int roll)
         {
-            if (gameOver) return;
+            if (gameOver) return turn;
             
             var currentTurn= turns[turn];
             if (currentTurn.Rolls.Sum() < 10 && currentTurn.Rolls.Count <= 1)
@@ -70,17 +70,25 @@ namespace BowlingTests
             {
                 currentTurn.Rolls.Add(roll);
             }
-            else
+            
+            if ((currentTurn.Rolls.Sum() == 10 || currentTurn.Rolls.Count == 2) && turn != 9)
             {
                 turn++;
-                Roll(roll);
             }
+            else if (turn == 9 && currentTurn.Rolls.Count == 2 && currentTurn.Rolls.Sum() < 10)
+            {
+                turn++;
+            }
+            else if (currentTurn.Rolls.Count == 3)
+                turn++;
+
             CheckIfGameIsOver();
+            return turn;
         }
 
         private void CheckIfGameIsOver()
         {
-            if (turn != 9) return;
+            if (turn != 10) return;
 
             switch (turns[9].Rolls.Count)
             {
