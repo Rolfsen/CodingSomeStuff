@@ -43,7 +43,20 @@ namespace BowlingTests
             else if (currentTurn.Rolls.Count == 3)
                 Turn++;
         }
+        
+        private void CheckIfGameIsOver()
+        {
+            if (Turn != 10) return;
 
+            switch (turns[9].Rolls.Count)
+            {
+                case 2 when turns[9].Rolls.Sum() < 10:
+                case 3:
+                    GameOver = true;
+                    break;
+            }
+        }
+        
         public int GetScore()
         {
             playerScore = 0;
@@ -82,22 +95,6 @@ namespace BowlingTests
             if (currentTurnRolls.Count == 1)
                 playerScore += rolls[nextRoll + 1];
             playerScore += rolls[nextRoll];
-        }
-
-
-        
-
-        private void CheckIfGameIsOver()
-        {
-            if (Turn != 10) return;
-
-            switch (turns[9].Rolls.Count)
-            {
-                case 2 when turns[9].Rolls.Sum() < 10:
-                case 3:
-                    GameOver = true;
-                    break;
-            }
         }
 
         private void GetRolls()
